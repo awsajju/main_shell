@@ -1,31 +1,33 @@
-#!/bin/bash
+#! /bin/bash
 
 USERID=$(id -u)
 
 if [ $USERID -ne 0 ]; then
 
-echo "you must have the sudo accesses to execute this"
+echo "Execute for sudo accesses"
+
 exit 1
+fi 
 
-dnf installed mysql -y
-
-if [ $? -ne 0 ]; then
-
-echo " ERROR : mysql installing failure"
-
-else 
-
-echo "Success : Mysql installed "
-
-fi
-
-dnf installed git -y
+dnf list installed mysql -y
 
 if [ $? -ne 0 ]; then
+ dnf install mysql -y
 
-echo "ERROR : Git installing failure"
+ 
 
-else 
-echo "Success : Git installed"
+ if [ $? -ne 0 ]; then 
 
-fi
+ echo " ERROR : mysql installed failed"
+
+ exit 1
+
+ else 
+
+ echo " success : mysql installed"
+
+ fi 
+ else 
+ echo "already mysql installed"
+
+ fi
